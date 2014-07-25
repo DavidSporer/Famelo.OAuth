@@ -1,0 +1,20 @@
+<f:layout name="Login" />
+
+<f:section name="Content">
+  <div class="typo3-expose-login clearfix">
+  	<f:for each="{services}" as="service" key="serviceName">
+		<div class="media">
+			<a class="pull-left" href="#">
+				<img src="{f:uri.resource(path: service.Logo)}" width="64px" class="media-object" alt="{serviceName}" />
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">{serviceName}</h4>
+				{service.description}
+				<f:link.action action="requestAuthorization" arguments="{serviceName: serviceName}" class="btn btn-default">
+				Login
+				</f:link.action>
+			</div>
+		</div>
+  	</f:for>
+  </div>
+</f:section>

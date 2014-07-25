@@ -1,0 +1,39 @@
+TYPO3:
+  Flow:
+    object:
+      excludeClasses:
+        'lusitanian.*': ['.*']
+        'alecsammon.*': ['.*']
+    # security:
+    #   enable: true
+    #   authentication:
+    #     providers:
+    #       OAuthProvider:
+    #         provider: 'Famelo\Oauth\Security\Authentication\OAuthAuthenticationProvider'
+    #         tokenClass: 'Famelo\Oauth\Security\Authentication\Token\OAuth'
+    #         entryPoint: WebRedirect
+    #         entryPointOptions:
+    #           uri: login
+    #         providerOptions:
+    #           partyClassName: \Famelo\Harvest\Domain\Model\User
+    #           roles:
+    #             - Famelo.Harvest:User
+
+Famelo:
+  Oauth:
+    UserAgent: Famelo.Oauth
+    Services:
+      Dropbox:
+        Key: ...
+        Secret: ...
+        Logo: resource://Famelo.Oauth/Public/Media/Icons/Dropbox.png
+      GitHub:
+        Key: ...
+        Secret: ...
+        Scopes:
+          - user
+        Logo: resource://Famelo.Oauth/Public/Media/Icons/GitHub.png
+      Harvest:
+        Key: ...
+        Secret: ...
+        Logo: resource://Famelo.Oauth/Public/Media/Icons/Harvest.png

@@ -1,0 +1,7 @@
+resources:
+  methods:
+    Famelo_Oauth_OauthController: 'method(Famelo\Oauth\Controller\OauthController->.*Action())'
+acls:
+  Everybody:
+    methods:
+      Famelo_Oauth_OauthController: GRANT

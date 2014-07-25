@@ -1,0 +1,14 @@
+{
+    "name": "famelo/oauth",
+    "type": "typo3-flow-package",
+    "description": "Add description here",
+    "require": {
+        "typo3/flow": "*",
+        "lusitanian/oauth": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Famelo\\Oauth": "Classes"
+        }
+    }
+}
