@@ -20,6 +20,12 @@ class OAuthAuthenticationController extends AbstractOAuthAuthenticationControlle
 	protected $oauthService;
 
 	/**
+	 * @Flow\Inject(setting="security.authentication.providers", package="TYPO3.Flow")
+	 * @var array
+	 */
+	protected $authenticationProviders;
+
+	/**
 	 * @return void
 	 */
 	public function loginAction() {
@@ -31,6 +37,7 @@ class OAuthAuthenticationController extends AbstractOAuthAuthenticationControlle
 	 * @return void
 	 */
 	public function requestAuthorizationAction($serviceName) {
+        $serviceName = ucfirst($serviceName);
 		$service = $this->oauthService->getService($serviceName);
 		$uri = $service->getAuthorizationUri();
 		$this->redirectToUri($uri);
@@ -56,7 +63,17 @@ class OAuthAuthenticationController extends AbstractOAuthAuthenticationControlle
 		if ($originalRequest !== NULL) {
 			$this->redirectToRequest($originalRequest);
 		}
-		$this->redirectToUri('/');
+
+		$account = $this->securityContext->getAccount();
+		if (isset($this->authenticationProviders[$account->getAuthenticationProviderName()]['redirectTarget'])){
+			$redirectTarget = $this->authenticationProviders[$account->getAuthenticationProviderName()]['redirectTarget'];
+			$action = isset($redirectTarget['action']) ? $redirectTarget['action'] : 'index';
+			$arguments = isset($redirectTarget['arguments']) ? $redirectTarget['arguments'] : array();
+			$controller = isset($redirectTarget['controller']) ? $redirectTarget['controller'] : NULL;
+			$package = isset($redirectTarget['package']) ? $redirectTarget['package'] : NULL;
+
+			$this->redirect($action, $controller, $package, $arguments);
+		}
 	}
 
 }
