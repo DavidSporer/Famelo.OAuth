@@ -1,0 +1,8 @@
+-
+  name: 'Authorization'
+  uriPattern: 'authorize/{serviceName}'
+  defaults:
+    '@action': 'requestAuthorization'
+    '@package':    'Famelo.Oauth'
+    '@controller': 'OAuthAuthentication'
+  appendExceedingArguments: true
