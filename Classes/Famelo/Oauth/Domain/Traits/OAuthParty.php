@@ -11,33 +11,9 @@ trait OAuthParty {
      * @var string
      *
      */
-    protected $accessToken;
-
-    /**
-     * @var string
-     *
-     */
     protected $userId;
 
     public function setExtractor($source) {}
-
-    /**
-     * Gets accessToken.
-     *
-     * @return string $accessToken
-     */
-    public function getAccessToken() {
-        return $this->accessToken;
-    }
-
-    /**
-     * Sets the accessToken.
-     *
-     * @param string $accessToken
-     */
-    public function setAccessToken($accessToken) {
-        $this->accessToken = $accessToken;
-    }
 
     /**
      * Gets userId.

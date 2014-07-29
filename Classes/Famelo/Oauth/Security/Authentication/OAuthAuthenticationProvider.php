@@ -131,13 +131,9 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 		$query->matching($query->equals('userId', $extractor->getUniqueId()));
 		$party = $query->execute()->getFirst();
 
-		if ($party !== NULL) {
-			$party->setAccessToken($token->getAccessToken());
-			$this->persistenceManager->update($party);
-		} else {
+		if ($party === NULL) {
 			$party = new $partyClassName();
 
-			$party->setAccessToken($token->getAccessToken());
 			$party->setUserId($extractor->getUniqueId());
 			$party->fillFromService($extractor);
 
