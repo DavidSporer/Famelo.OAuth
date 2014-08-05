@@ -4,7 +4,9 @@
     "description": "Add description here",
     "require": {
         "typo3/flow": "*",
-        "lusitanian/oauth": "*"
+        "lusitanian/oauth": "*",
+        "oryzone/oauth-user-data": "*",
+        "alecsammon/php-raml-parser": "*"
     },
     "autoload": {
         "psr-0": {
