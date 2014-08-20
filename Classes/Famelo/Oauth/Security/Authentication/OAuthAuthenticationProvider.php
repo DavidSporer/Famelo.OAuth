@@ -103,19 +103,16 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 
 			$token = $service->getStorage()->retrieveAccessToken($serviceName);
 
-			if ($this->isOAuthTokenValid($token) === FALSE) {
+			if ($this->isOAuthTokenValid($token) === FALSE && $token->getRefreshToken() !== NULL) {
 				$token = $service->refreshAccessToken($token);
 			}
 
 			$partyClassName = $this->options['partyClassName'];
-
 			$query = $this->persistenceManager->createQueryForType($partyClassName);
 			$query->matching($query->equals('accessToken', $token->getAccessToken()));
 			$party = $query->execute()->getFirst();
 
 			if ($party === NULL) {
-				$partyClassName = $this->options['partyClassName'];
-
 				$extractorFactory = new \OAuth\UserData\ExtractorFactory();
 				$extractor = $extractorFactory->get($service);
 
@@ -124,6 +121,7 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 				$party = $query->execute()->getFirst();
 
 				if ($party === NULL) {
+					$this->options['providerName'] = $this->name;
 					$missingPartyHandler = new $this->missingPartyHandler['className'](array_merge($this->options, $this->missingPartyHandler['options']));
 					$party = $missingPartyHandler->handle($token, $service);
 				}

@@ -56,14 +56,18 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 	protected $securityContext;
 
 	public function handle($token, $service) {
+		$partyClassName = $this->options['partyClassName'];
 		$party = new $partyClassName();
+
+		$extractorFactory = new \OAuth\UserData\ExtractorFactory();
+		$extractor = $extractorFactory->get($service);
 
 		$party->setUserId($extractor->getUniqueId());
 		$party->fillFromService($extractor);
 
 		$account = new Account();
-		$account->setAccountIdentifier($this->name . ':' . $extractor->getUniqueId());
-		$account->setAuthenticationProviderName($this->name);
+		$account->setAccountIdentifier($this->options['providerName'] . ':' . $extractor->getUniqueId());
+		$account->setAuthenticationProviderName($this->options['providerName']);
 
 		$party->addAccount($account);
 

@@ -23,7 +23,7 @@ Famelo:
   Oauth:
     UserAgent: Famelo.Oauth
     missingPartyHandler:
-        className: '\Famelo\Oauth\Security\MissingPartyHandler\RedirectHandler'
+        className: '\Famelo\Oauth\Security\MissingPartyHandler\AutoCreatePartyHandler'
         options:
           uri: '/'
     Services:
