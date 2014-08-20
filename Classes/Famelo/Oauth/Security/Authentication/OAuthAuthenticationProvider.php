@@ -62,6 +62,12 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 	protected $securityContext;
 
 	/**
+	 * @Flow\Inject(setting="missingPartyHandler")
+	 * @var string
+	 */
+	protected $missingPartyHandler;
+
+	/**
 	 * Returns the class names of the tokens this provider can authenticate.
 	 *
 	 * @return array
@@ -108,7 +114,19 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 			$party = $query->execute()->getFirst();
 
 			if ($party === NULL) {
-				$party = $this->createParty($token, $service);
+				$partyClassName = $this->options['partyClassName'];
+
+				$extractorFactory = new \OAuth\UserData\ExtractorFactory();
+				$extractor = $extractorFactory->get($service);
+
+				$query = $this->persistenceManager->createQueryForType($partyClassName);
+				$query->matching($query->equals('userId', $extractor->getUniqueId()));
+				$party = $query->execute()->getFirst();
+
+				if ($party === NULL) {
+					$missingPartyHandler = new $this->missingPartyHandler['className'](array_merge($this->options, $this->missingPartyHandler['options']));
+					$party = $missingPartyHandler->handle($token, $service);
+				}
 			}
 
 			$authenticationToken->setAccount($party->getAccounts()->current());
@@ -119,43 +137,6 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 	        	$authenticationToken->setAuthenticationStatus(TokenInterface::WRONG_CREDENTIALS);
 	        }
 		}
-	}
-
-	public function createParty($token, $service) {
-		$partyClassName = $this->options['partyClassName'];
-
-		$extractorFactory = new \OAuth\UserData\ExtractorFactory();
-		$extractor = $extractorFactory->get($service);
-
-		$query = $this->persistenceManager->createQueryForType($partyClassName);
-		$query->matching($query->equals('userId', $extractor->getUniqueId()));
-		$party = $query->execute()->getFirst();
-
-		if ($party === NULL) {
-			$party = new $partyClassName();
-
-			$party->setUserId($extractor->getUniqueId());
-			$party->fillFromService($extractor);
-
-			$account = new Account();
-			$account->setAccountIdentifier($this->name . ':' . $extractor->getUniqueId());
-			$account->setAuthenticationProviderName($this->name);
-
-			$party->addAccount($account);
-
-			if (isset($this->options['roles'])) {
-				foreach ($this->options['roles'] as $roleName) {
-					$account->addRole($this->roleRepository->findByIdentifier($roleName));
-				}
-			}
-
-			$this->accountRepository->add($account);
-			$this->persistenceManager->add($party);
-		}
-
-		$this->persistenceManager->persistAll();
-
-		return $party;
 	}
 
 	public function isOAuthTokenValid($token) {

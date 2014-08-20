@@ -22,6 +22,10 @@ TYPO3:
 Famelo:
   Oauth:
     UserAgent: Famelo.Oauth
+    missingPartyHandler:
+        className: '\Famelo\Oauth\Security\MissingPartyHandler\RedirectHandler'
+        options:
+          uri: '/'
     Services:
       Dropbox:
         Key: ...
