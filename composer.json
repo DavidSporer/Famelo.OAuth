@@ -4,7 +4,7 @@
     "description": "Add description here",
     "require": {
         "typo3/flow": "*",
-        "lusitanian/oauth": "*",
+        "lusitanian/oauth": "~1.0@dev",
         "oryzone/oauth-user-data": "*",
         "alecsammon/php-raml-parser": "*"
     },
