@@ -57,6 +57,8 @@ class OauthService {
 	}
 
 	public function getService($serviceName, $authorizationRequired = FALSE) {
+		$serviceName = $this->findServiceName($serviceName);
+
 		$serviceConfiguration = $this->services[$serviceName];
 
 		$this->uriBuilder->setRequest($this->request);
@@ -97,6 +99,15 @@ class OauthService {
 
 	public function getServices() {
 		return $this->services;
+	}
+
+	public function findServiceName($lowercaseServiceName) {
+		foreach ($this->services as $serviceName => $serviceConfiguration) {
+			if (strtolower($lowercaseServiceName) == strtolower($serviceName)) {
+				return $serviceName;
+			}
+		}
+		return $lowercaseServiceName;
 	}
 
 }
