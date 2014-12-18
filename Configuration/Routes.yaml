@@ -6,3 +6,12 @@
     '@package':    'Famelo.Oauth'
     '@controller': 'OAuthAuthentication'
   appendExceedingArguments: true
+
+-
+  name: Login
+  uriPattern: 'login'
+  defaults:
+    '@format': 'html'
+    '@action': 'login'
+    '@controller': 'OAuthAuthentication'
+    '@package': 'Famelo.Oauth'
