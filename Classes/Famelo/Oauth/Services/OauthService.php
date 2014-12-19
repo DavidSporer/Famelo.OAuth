@@ -110,4 +110,10 @@ class OauthService {
 		return $lowercaseServiceName;
 	}
 
+	public function getServiceToken($serviceName) {
+		$service = $this->getService($serviceName);
+		$token = $service->getStorage()->retrieveAccessToken($serviceName);
+		return $token;
+	}
+
 }
