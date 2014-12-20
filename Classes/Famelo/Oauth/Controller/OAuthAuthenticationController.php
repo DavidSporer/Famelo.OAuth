@@ -10,10 +10,8 @@ use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\ServiceFactory;
 use TYPO3\Flow\Annotations as Flow;
-use Famelo\Soul\Controller\SoulControllerTrait;
 
 class OAuthAuthenticationController extends AbstractOAuthAuthenticationController {
-	use SoulControllerTrait;
 
 	/**
 	 * @Flow\Inject
