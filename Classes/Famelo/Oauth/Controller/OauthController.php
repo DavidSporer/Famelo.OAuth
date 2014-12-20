@@ -7,11 +7,12 @@ namespace Famelo\Oauth\Controller;
  *                                                                        */
 
 use Famelo\Oauth\Services\OauthService;
+use Famelo\Soul\Controller\AbstractSoulController;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\ServiceFactory;
 use TYPO3\Flow\Annotations as Flow;
 
-class OauthController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class OauthController extends AbstractSoulController {
 
 	/**
 	 * @Flow\Inject
