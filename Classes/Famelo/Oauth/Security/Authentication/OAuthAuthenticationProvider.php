@@ -25,7 +25,6 @@ use TYPO3\Flow\Security\Authentication\TokenInterface;
 use TYPO3\Flow\Security\Authentication\Token\UsernamePassword;
 use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
 use TYPO3\Flow\Security\Policy\Role;
-use TYPO3\Flow\Security\Policy\RoleRepository;
 
 /**
  */
@@ -36,12 +35,6 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 	 * @var AccountRepository
 	 */
 	protected $accountRepository;
-
-	/**
-	 * @Flow\Inject
-	 * @var RoleRepository
-	 */
-	protected $roleRepository;
 
 	/**
 	 * @Flow\Inject

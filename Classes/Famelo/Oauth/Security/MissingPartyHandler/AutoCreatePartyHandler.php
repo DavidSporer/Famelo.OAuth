@@ -25,7 +25,6 @@ use TYPO3\Flow\Security\Authentication\TokenInterface;
 use TYPO3\Flow\Security\Authentication\Token\UsernamePassword;
 use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
 use TYPO3\Flow\Security\Policy\Role;
-use TYPO3\Flow\Security\Policy\RoleRepository;
 
 /**
  */
@@ -36,12 +35,6 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 	 * @var AccountRepository
 	 */
 	protected $accountRepository;
-
-	/**
-	 * @Flow\Inject
-	 * @var RoleRepository
-	 */
-	protected $roleRepository;
 
 	/**
 	 * @Flow\Inject
@@ -73,7 +66,7 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 
 		if (isset($this->options['roles'])) {
 			foreach ($this->options['roles'] as $roleName) {
-				$account->addRole($this->roleRepository->findByIdentifier($roleName));
+				// $account->addRole($this->roleRepository->findByIdentifier($roleName));
 			}
 		}
 
