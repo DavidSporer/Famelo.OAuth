@@ -48,6 +48,12 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 	 */
 	protected $securityContext;
 
+	/**
+	 * @var \TYPO3\Flow\Security\Policy\PolicyService
+	 * @Flow\Inject
+	 */
+	protected $policyService;
+
 	public function handle($token, $service) {
 		$partyClassName = $this->options['partyClassName'];
 		$party = new $partyClassName();
@@ -66,7 +72,7 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 
 		if (isset($this->options['roles'])) {
 			foreach ($this->options['roles'] as $roleName) {
-				// $account->addRole($this->roleRepository->findByIdentifier($roleName));
+				$account->addRole($this->policyService->getRole($roleName));
 			}
 		}
 
