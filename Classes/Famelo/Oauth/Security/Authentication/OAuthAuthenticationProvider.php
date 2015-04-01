@@ -101,23 +101,17 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 			}
 
 			$partyClassName = $this->options['partyClassName'];
+			$extractorFactory = new \OAuth\UserData\ExtractorFactory();
+			$extractor = $extractorFactory->get($service);
+
 			$query = $this->persistenceManager->createQueryForType($partyClassName);
-			$query->matching($query->equals('accessToken', $token->getAccessToken()));
+			$query->matching($query->equals('userId', $extractor->getUniqueId()));
 			$party = $query->execute()->getFirst();
 
 			if ($party === NULL) {
-				$extractorFactory = new \OAuth\UserData\ExtractorFactory();
-				$extractor = $extractorFactory->get($service);
-
-				$query = $this->persistenceManager->createQueryForType($partyClassName);
-				$query->matching($query->equals('userId', $extractor->getUniqueId()));
-				$party = $query->execute()->getFirst();
-
-				if ($party === NULL) {
-					$this->options['providerName'] = $this->name;
-					$missingPartyHandler = new $this->missingPartyHandler['className'](array_merge($this->options, $this->missingPartyHandler['options']));
-					$party = $missingPartyHandler->handle($token, $service);
-				}
+				$this->options['providerName'] = $this->name;
+				$missingPartyHandler = new $this->missingPartyHandler['className'](array_merge($this->options, $this->missingPartyHandler['options']));
+				$party = $missingPartyHandler->handle($token, $service);
 			}
 
 			$authenticationToken->setAccount($party->getAccounts()->current());
