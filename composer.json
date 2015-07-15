@@ -1,5 +1,5 @@
 {
-    "name": "famelo/oauth",
+    "name": "sporerd/oauth",
     "type": "typo3-flow-package",
     "description": "Add description here",
     "require": {
