@@ -1,11 +1,20 @@
 
-privilegeTargets:
-  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
-    Famelo_Oauth_OauthController:
-      matcher: 'method(Famelo\Oauth\Controller\OauthController->.*Action())'
-roles:
-  'TYPO3.Flow:Everybody':
-    privileges:
-      -
-        privilegeTarget: Famelo_Oauth_OauthController
-        permission: GRANT
+#privilegeTargets:
+#  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+#    Famelo_Oauth_OauthController:
+#      matcher: 'method(Famelo\Oauth\Controller\OauthController->.*Action())'
+#roles:
+#  'TYPO3.Flow:Everybody':
+#    privileges:
+#      -
+#        privilegeTarget: Famelo_Oauth_OauthController
+#        permission: GRANT
+
+resources:
+  methods:
+    Famelo_Oauth_OauthController: 'method(Famelo\Oauth\Controller\OauthController->.*Action())'
+
+acls:
+  Everybody:
+    methods:
+      Famelo_Oauth_OauthController: GRANT
