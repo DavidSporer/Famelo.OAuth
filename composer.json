@@ -8,6 +8,7 @@
     "require-dev": {
         "sporerd/oauth-user-data": "*"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "Famelo\\Oauth": "Classes"
