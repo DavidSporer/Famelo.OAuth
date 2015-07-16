@@ -4,11 +4,17 @@
     "description": "Add description here",
     "require": {
         "typo3/flow": "*",
-        "oryzone/oauth-user-data": "*"
+        "sporerd/oauth-user-data": "*"
     },
     "autoload": {
         "psr-0": {
             "Famelo\\Oauth": "Classes"
         }
+    },
+   "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:DavidSporer/PHPoAuthUserData.git"
     }
+  ],
 }
