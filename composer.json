@@ -3,7 +3,9 @@
     "type": "typo3-flow-package",
     "description": "Add description here",
     "require": {
-        "typo3/flow": "*",
+        "typo3/flow": "*"
+    },
+    "require-dev": {
         "sporerd/oauth-user-data": "*"
     },
     "autoload": {
