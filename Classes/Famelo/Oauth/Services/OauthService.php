@@ -19,101 +19,123 @@ use TYPO3\Flow\Mvc\Routing\UriBuilder;
 /**
  * @Flow\Scope("singleton")
  */
-class OauthService {
-	/**
-	 * @Flow\Inject(setting="Services")
-	 * @var array
-	 */
-	protected $services;
+class OauthService
+{
+    /**
+     * @Flow\Inject(setting="Services")
+     * @var array
+     */
+    protected $services;
 
-	/**
-	 * @var ServiceFactory
-	 */
-	protected $serviceFactory;
+    /**
+     * @var ServiceFactory
+     */
+    protected $serviceFactory;
 
-	/**
-	 * @var TokenStorageInterface
-	 */
-	protected $storage;
+    /**
+     * @var TokenStorageInterface
+     */
+    protected $storage;
 
-	/**
-	 * @Flow\Inject
-	 * @var UriBuilder
-	 */
-	protected $uriBuilder;
+    /**
+     * @Flow\Inject
+     * @var UriBuilder
+     */
+    protected $uriBuilder;
 
-	/**
-	 * @var ActionRequest
-	 */
-	protected $request;
+    /**
+     * @var ActionRequest
+     */
+    protected $request;
 
-	public function injectRequest($request) {
-		$this->request = $request;
-	}
+    public function injectRequest($request)
+    {
+        $this->request = $request;
+    }
 
-	public function __construct() {
-		$this->serviceFactory = new ServiceFactory();
-		$this->storage = new Session();
-	}
+    public function __construct()
+    {
+        $this->serviceFactory = new ServiceFactory();
+        $this->storage = new Session();
+    }
 
-	public function getService($serviceName, $authorizationRequired = FALSE) {
-		$serviceName = $this->findServiceName($serviceName);
+    public function getService($serviceName, $authorizationRequired = FALSE)
+    {
+        $serviceName = $this->findServiceName($serviceName);
 
-		$serviceConfiguration = $this->services[$serviceName];
+        $serviceConfiguration = $this->services[$serviceName];
 
-		$this->uriBuilder->setRequest($this->request);
-		$this->uriBuilder->setCreateAbsoluteUri(TRUE);
+        $this->uriBuilder->setRequest($this->request);
+        $this->uriBuilder->setCreateAbsoluteUri(TRUE);
 
-		$credentials = new Credentials(
-		    $serviceConfiguration['Key'],
-		    $serviceConfiguration['Secret'],
-		    $this->uriBuilder->uriFor('requestToken', array('serviceName' => $serviceName))
-		);
+        $redirectUri = null;
+        if (isset($serviceConfiguration['Redirect'])) {
+            $redirectTarget = $serviceConfiguration['Redirect'];
 
-		$scopes = array();
-		if (isset($serviceConfiguration['Scopes'])) {
-			$scopes = $serviceConfiguration['Scopes'];
-		}
+            $redirectUri = $this->uriBuilder->uriFor(
+                $redirectTarget['action'],
+                array(
+                    'serviceName' => $serviceName
+                ),
+                $redirectTarget['controller'],
+                $redirectTarget['package']);
+        } else {
+            $redirectUri = $this->uriBuilder->uriFor('requestToken', array('serviceName' => $serviceName));
+        }
 
-		$service = $this->serviceFactory->createService($serviceName, $credentials, $this->storage, $scopes);
+        $credentials = new Credentials(
+            $serviceConfiguration['Key'],
+            $serviceConfiguration['Secret'],
+            $redirectUri
+        );
 
-		if ($authorizationRequired === TRUE) {
-			if (!$service->getStorage()->hasAccessToken($serviceName)) {
-				$uri = $this->uriBuilder->uriFor('requestAuthorization', array('serviceName' => $serviceName), 'Oauth', 'Famelo.Oauth');
-				header('Location: ' . $uri);
-				exit();
-			}
+        $scopes = array();
+        if (isset($serviceConfiguration['Scopes'])) {
+            $scopes = $serviceConfiguration['Scopes'];
+        }
 
-			$token = $service->getStorage()->retrieveAccessToken($serviceName);
+        $service = $this->serviceFactory->createService($serviceName, $credentials, $this->storage, $scopes);
 
-	        if ($token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES
-	            && $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
-	            && time() > $token->getEndOfLife()
-	        ) {
-	            $service->refreshAccessToken($token);
-	        }
+        if ($authorizationRequired === TRUE) {
+            if (!$service->getStorage()->hasAccessToken($serviceName)) {
+                $uri = $this->uriBuilder->uriFor('requestAuthorization', array('serviceName' => $serviceName), 'Oauth', 'Famelo.Oauth');
+                header('Location: ' . $uri);
+                exit();
+            }
+
+            $token = $service->getStorage()->retrieveAccessToken($serviceName);
+
+            if ($token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES
+                && $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
+                && time() > $token->getEndOfLife()
+            ) {
+                $service->refreshAccessToken($token);
+            }
         }
 
         return $service;
-	}
+    }
 
-	public function getServices() {
-		return $this->services;
-	}
+    public function getServices()
+    {
+        return $this->services;
+    }
 
-	public function findServiceName($lowercaseServiceName) {
-		foreach ($this->services as $serviceName => $serviceConfiguration) {
-			if (strtolower($lowercaseServiceName) == strtolower($serviceName)) {
-				return $serviceName;
-			}
-		}
-		return $lowercaseServiceName;
-	}
+    public function findServiceName($lowercaseServiceName)
+    {
+        foreach ($this->services as $serviceName => $serviceConfiguration) {
+            if (strtolower($lowercaseServiceName) == strtolower($serviceName)) {
+                return $serviceName;
+            }
+        }
+        return $lowercaseServiceName;
+    }
 
-	public function getServiceToken($serviceName) {
-		$service = $this->getService($serviceName);
-		$token = $service->getStorage()->retrieveAccessToken($serviceName);
-		return $token;
-	}
+    public function getServiceToken($serviceName)
+    {
+        $service = $this->getService($serviceName);
+        $token = $service->getStorage()->retrieveAccessToken($serviceName);
+        return $token;
+    }
 
 }

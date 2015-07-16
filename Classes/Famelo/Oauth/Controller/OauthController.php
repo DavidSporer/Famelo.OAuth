@@ -54,6 +54,7 @@ class OauthController extends ActionController
     {
         $service = $this->oauthService->getService($serviceName);
         $result = $service->requestAccessToken($_GET['code']);
+        die(\TYPO3\Flow\var_dump($result));
 
         $serviceConfiguration = $this->services[$serviceName];
         if (isset($serviceConfiguration['Redirect'])) {
