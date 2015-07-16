@@ -12,39 +12,64 @@ use OAuth\ServiceFactory;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 
-class OauthController extends ActionController {
+class OauthController extends ActionController
+{
 
-	/**
-	 * @Flow\Inject
-	 * @var OauthService
-	 */
-	protected $oauthService;
+    /**
+     * @Flow\Inject
+     * @var OauthService
+     */
+    protected $oauthService;
 
-	/**
-	 * @return void
-	 */
-	public function indexAction() {
-	}
+    /**
+     * @Flow\Inject(setting="Services")
+     * @var array
+     */
+    protected $services;
 
-	/**
-	 * @param string $serviceName
-	 * @return void
-	 */
-	public function requestAuthorizationAction($serviceName) {
-		$service = $this->oauthService->getService($serviceName);
-		$uri = $service->getAuthorizationUri();
+    /**
+     * @return void
+     */
+    public function indexAction()
+    {
+    }
 
-		$this->redirectToUri($uri);
-	}
+    /**
+     * @param string $serviceName
+     * @return void
+     */
+    public function requestAuthorizationAction($serviceName)
+    {
+        $service = $this->oauthService->getService($serviceName);
+        $uri = $service->getAuthorizationUri();
 
-	/**
-	 * @param string $serviceName
-	 * @return void
-	 */
-	public function requestTokenAction($serviceName) {
-		$service = $this->oauthService->getService($serviceName);
-		$result = $service->requestAccessToken($_GET['code']);
-		$this->redirect('index');
-	}
+        $this->redirectToUri($uri);
+    }
+
+    /**
+     * @param string $serviceName
+     * @return void
+     */
+    public function requestTokenAction($serviceName)
+    {
+        $service = $this->oauthService->getService($serviceName);
+        $result = $service->requestAccessToken($_GET['code']);
+
+        $serviceConfiguration = $this->services[$serviceName];
+        if (isset($serviceConfiguration['Redirect'])) {
+            $redirectTarget = $serviceConfiguration['Redirect'];
+            $this->redirect(
+                $redirectTarget['action'],
+                $redirectTarget['controller'],
+                $redirectTarget['package'],
+                array(
+                    'result' => $result,
+                    'serviceName' => $serviceName
+                )
+            );
+        } else {
+            $this->redirect('index');
+        }
+    }
 
 }
