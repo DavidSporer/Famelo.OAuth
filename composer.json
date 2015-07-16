@@ -3,12 +3,9 @@
     "type": "typo3-flow-package",
     "description": "Add description here",
     "require": {
-        "typo3/flow": "*"
-    },
-    "require-dev": {
+        "typo3/flow": "*",
         "sporerd/oauth-user-data": "*"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "Famelo\\Oauth": "Classes"
