@@ -2,7 +2,7 @@
     "name": "sporerd/oauth",
     "type": "typo3-flow-package",
     "description": "Add description here",
-    "dist": {
+    "source": {
         "url": "git@github.com:DavidSporer/Famelo.OAuth.git",
         "type": "git"
     },
