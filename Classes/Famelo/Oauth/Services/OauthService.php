@@ -83,6 +83,10 @@ class OauthService
             $redirectUri = $this->uriBuilder->uriFor('requestToken', array('serviceName' => $serviceName));
         }
 
+        if(strpos($redirectUri, 'http')) {
+            $redirectUri = 'https://app.passcreator.com' . $redirectUri;
+        }
+
         $credentials = new Credentials(
             $serviceConfiguration['Key'],
             $serviceConfiguration['Secret'],
@@ -99,6 +103,11 @@ class OauthService
         if ($authorizationRequired === TRUE) {
             if (!$service->getStorage()->hasAccessToken($serviceName)) {
                 $uri = $this->uriBuilder->uriFor('requestAuthorization', array('serviceName' => $serviceName), 'Oauth', 'Famelo.Oauth');
+
+                if(strpos($uri, 'http')) {
+                    $uri = 'https://app.passcreator.com' . $uri;
+                }
+
                 header('Location: ' . $uri);
                 exit();
             }
