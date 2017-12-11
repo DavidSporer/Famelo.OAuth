@@ -16,15 +16,15 @@ use Famelo\Oauth\Domain\Repository\OAuthTokenRepository;
 use Famelo\Oauth\Security\Authentication\Token\OAuth;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Token\TokenInterface as OAuthTokenInterface;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\PersistenceManagerInterface;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Authentication\Provider\AbstractProvider;
-use TYPO3\Flow\Security\Authentication\TokenInterface;
-use TYPO3\Flow\Security\Authentication\Token\UsernamePassword;
-use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
-use TYPO3\Flow\Security\Policy\Role;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Authentication\Provider\AbstractProvider;
+use Neos\Flow\Security\Authentication\TokenInterface;
+use Neos\Flow\Security\Authentication\Token\UsernamePassword;
+use Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
+use Neos\Flow\Security\Policy\Role;
 
 /**
  */
@@ -43,13 +43,13 @@ class AutoCreatePartyHandler extends AbstractMissingPartyHandler {
 	protected $persistenceManager;
 
 	/**
-	 * @var \TYPO3\Flow\Security\Context
+	 * @var \Neos\Flow\Security\Context
 	 * @Flow\Inject
 	 */
 	protected $securityContext;
 
 	/**
-	 * @var \TYPO3\Flow\Security\Policy\PolicyService
+	 * @var \Neos\Flow\Security\Policy\PolicyService
 	 * @Flow\Inject
 	 */
 	protected $policyService;

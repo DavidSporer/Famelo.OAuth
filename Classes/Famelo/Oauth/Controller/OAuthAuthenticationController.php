@@ -9,7 +9,7 @@ namespace Famelo\Oauth\Controller;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\ServiceFactory;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 class OAuthAuthenticationController extends AbstractOAuthAuthenticationController {
 
@@ -20,7 +20,7 @@ class OAuthAuthenticationController extends AbstractOAuthAuthenticationControlle
 	protected $oauthService;
 
 	/**
-	 * @Flow\Inject(setting="security.authentication.providers", package="TYPO3.Flow")
+	 * @Flow\Inject(setting="security.authentication.providers", package="Neos.Flow")
 	 * @var array
 	 */
 	protected $authenticationProviders;
@@ -56,10 +56,10 @@ class OAuthAuthenticationController extends AbstractOAuthAuthenticationControlle
 	/**
 	 * Redirects to a potentially intercepted request. Returns an error message if there has been none.
 	 *
-	 * @param \TYPO3\Flow\Mvc\ActionRequest $originalRequest The request that was intercepted by the security framework, NULL if there was none
+	 * @param \Neos\Flow\Mvc\ActionRequest $originalRequest The request that was intercepted by the security framework, NULL if there was none
 	 * @return string
 	 */
-	protected function onAuthenticationSuccess(\TYPO3\Flow\Mvc\ActionRequest $originalRequest = NULL) {
+	protected function onAuthenticationSuccess(\Neos\Flow\Mvc\ActionRequest $originalRequest = NULL) {
 		if ($originalRequest !== NULL) {
 			$this->redirectToRequest($originalRequest);
 		}

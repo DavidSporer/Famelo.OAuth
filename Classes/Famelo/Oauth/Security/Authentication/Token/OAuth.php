@@ -11,12 +11,12 @@ namespace Famelo\Oauth\Security\Authentication\Token;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * An authentication token used for simple username and password authentication.
  */
-class OAuth extends \TYPO3\Flow\Security\Authentication\Token\AbstractToken {
+class OAuth extends \Neos\Flow\Security\Authentication\Token\AbstractToken {
 
 	/**
 	 * @var array
@@ -31,13 +31,13 @@ class OAuth extends \TYPO3\Flow\Security\Authentication\Token\AbstractToken {
 	 * are available. Sets the authentication status to REAUTHENTICATION_NEEDED, if credentials have been sent.
 	 *
 	 * Note: You need to send the username and password in these two POST parameters:
-	 *       __authentication[TYPO3][Flow][Security][Authentication][Token][UsernamePassword][username]
-	 *   and __authentication[TYPO3][Flow][Security][Authentication][Token][UsernamePassword][password]
+	 *       __authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][username]
+	 *   and __authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][password]
 	 *
-	 * @param \TYPO3\Flow\Mvc\ActionRequest $actionRequest The current action request
+	 * @param \Neos\Flow\Mvc\ActionRequest $actionRequest The current action request
 	 * @return void
 	 */
-	public function updateCredentials(\TYPO3\Flow\Mvc\ActionRequest $actionRequest) {
+	public function updateCredentials(\Neos\Flow\Mvc\ActionRequest $actionRequest) {
 		if ($actionRequest->hasArgument('serviceName')) {
 			$this->credentials['serviceName'] = $actionRequest->getArgument('serviceName');
 			$this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);

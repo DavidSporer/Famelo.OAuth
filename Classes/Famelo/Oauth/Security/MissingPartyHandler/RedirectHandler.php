@@ -16,17 +16,17 @@ use Famelo\Oauth\Domain\Repository\OAuthTokenRepository;
 use Famelo\Oauth\Security\Authentication\Token\OAuth;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Token\TokenInterface as OAuthTokenInterface;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Exception\StopActionException;
-use TYPO3\Flow\Persistence\PersistenceManagerInterface;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Authentication\Provider\AbstractProvider;
-use TYPO3\Flow\Security\Authentication\TokenInterface;
-use TYPO3\Flow\Security\Authentication\Token\UsernamePassword;
-use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
-use TYPO3\Flow\Security\Policy\Role;
-use TYPO3\Flow\Security\Policy\RoleRepository;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\Exception\StopActionException;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Authentication\Provider\AbstractProvider;
+use Neos\Flow\Security\Authentication\TokenInterface;
+use Neos\Flow\Security\Authentication\Token\UsernamePassword;
+use Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
+use Neos\Flow\Security\Policy\Role;
+use Neos\Flow\Security\Policy\RoleRepository;
 
 /**
  */
@@ -36,7 +36,7 @@ class RedirectHandler extends AbstractMissingPartyHandler {
 	 * Message.
 	 *
 	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Mvc\FlashMessageContainer
+	 * @var \Neos\Flow\Mvc\FlashMessageContainer
 	 */
 	protected $flashMessageContainer;
 

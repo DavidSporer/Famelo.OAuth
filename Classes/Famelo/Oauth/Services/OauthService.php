@@ -11,10 +11,10 @@ use OAuth\Common\Storage\Session;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\ServiceFactory;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Http\Request;
-use TYPO3\Flow\Mvc\ActionRequest;
-use TYPO3\Flow\Mvc\Routing\UriBuilder;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\Request;
+use Neos\Flow\Mvc\ActionRequest;
+use Neos\Flow\Mvc\Routing\UriBuilder;
 
 /**
  * @Flow\Scope("singleton")

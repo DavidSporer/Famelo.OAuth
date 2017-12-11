@@ -16,15 +16,15 @@ use Famelo\Oauth\Domain\Repository\OAuthTokenRepository;
 use Famelo\Oauth\Security\Authentication\Token\OAuth;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Token\TokenInterface as OAuthTokenInterface;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\PersistenceManagerInterface;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Authentication\Provider\AbstractProvider;
-use TYPO3\Flow\Security\Authentication\TokenInterface;
-use TYPO3\Flow\Security\Authentication\Token\UsernamePassword;
-use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
-use TYPO3\Flow\Security\Policy\Role;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Authentication\Provider\AbstractProvider;
+use Neos\Flow\Security\Authentication\TokenInterface;
+use Neos\Flow\Security\Authentication\Token\UsernamePassword;
+use Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
+use Neos\Flow\Security\Policy\Role;
 
 /**
  */
@@ -49,7 +49,7 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 	protected $oauthService;
 
 	/**
-	 * @var \TYPO3\Flow\Security\Context
+	 * @var \Neos\Flow\Security\Context
 	 * @Flow\Inject
 	 */
 	protected $securityContext;
@@ -73,16 +73,16 @@ class OAuthAuthenticationProvider extends AbstractProvider {
 	 * Checks the given token for validity and sets the token authentication status
 	 * accordingly (success, wrong credentials or no credentials given).
 	 *
-	 * @param \TYPO3\Flow\Security\Authentication\TokenInterface $authenticationToken The token to be authenticated
+	 * @param \Neos\Flow\Security\Authentication\TokenInterface $authenticationToken The token to be authenticated
 	 * @return void
-	 * @throws \TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException
+	 * @throws \Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException
 	 */
 	public function authenticate(TokenInterface $authenticationToken) {
 		if (!($authenticationToken instanceof OAuth)) {
 			throw new UnsupportedAuthenticationTokenException('This provider cannot authenticate the given token.', 1217339840);
 		}
 
-		/** @var $account \TYPO3\Flow\Security\Account */
+		/** @var $account \Neos\Flow\Security\Account */
 		$account = NULL;
 		$credentials = $authenticationToken->getCredentials();
 

@@ -9,8 +9,8 @@ namespace Famelo\Oauth\Controller;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\ServiceFactory;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\Controller\ActionController;
 
 class OauthController extends ActionController
 {

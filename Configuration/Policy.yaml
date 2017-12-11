@@ -1,10 +1,10 @@
 
 privilegeTargets:
-  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+  Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
     Famelo_Oauth_OauthController:
       matcher: 'method(Famelo\Oauth\Controller\OauthController->.*Action())'
 roles:
-  'TYPO3.Flow:Everybody':
+  'Neos.Flow:Everybody':
     privileges:
       -
         privilegeTarget: Famelo_Oauth_OauthController

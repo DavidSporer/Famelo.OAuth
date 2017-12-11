@@ -16,12 +16,12 @@ use Famelo\Oauth\Domain\Repository\OAuthTokenRepository;
 use Famelo\Oauth\Security\Authentication\Token\OAuth;
 use Famelo\Oauth\Services\OauthService;
 use OAuth\Common\Token\TokenInterface as OAuthTokenInterface;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\PersistenceManagerInterface;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Policy\Role;
-use TYPO3\Flow\Security\Policy\RoleRepository;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Policy\Role;
+use Neos\Flow\Security\Policy\RoleRepository;
 
 /**
  */

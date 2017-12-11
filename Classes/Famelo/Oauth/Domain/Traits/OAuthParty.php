@@ -2,8 +2,8 @@
 namespace Famelo\Oauth\Domain\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Party\Domain\Model\PersonName;
+use Neos\Flow\Annotations as Flow;
+use Neos\Party\Domain\Model\PersonName;
 
 trait OAuthParty {
 
